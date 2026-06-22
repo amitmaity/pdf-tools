@@ -5,6 +5,9 @@ const navItems = [
   { to: '/split', label: 'Split' },
   { to: '/merge', label: 'Merge' },
   { to: '/compress', label: 'Compress' },
+  { to: '/organize', label: 'Organize' },
+  { to: '/pdf-to-images', label: 'To Images' },
+  { to: '/images-to-pdf', label: 'From Images' },
 ]
 
 export function Layout() {
@@ -17,7 +20,7 @@ export function Layout() {
           <Link to="/" className="text-lg font-bold text-indigo-600">
             PDF Tools
           </Link>
-          <nav className="flex gap-1 sm:gap-2">
+          <nav className="flex flex-wrap justify-end gap-1 sm:gap-2">
             {navItems.map(({ to, label }) => {
               const active = pathname === to || (to !== '/' && pathname.startsWith(to))
               return (

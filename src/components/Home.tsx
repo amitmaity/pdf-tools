@@ -19,6 +19,24 @@ const tools = [
     description: 'Reduce file size by re-encoding embedded images at lower quality.',
     icon: '🗜️',
   },
+  {
+    to: '/organize',
+    title: 'Organize PDF',
+    description: 'Reorder, rotate, or remove pages. Extract a subset into a new PDF.',
+    icon: '📋',
+  },
+  {
+    to: '/pdf-to-images',
+    title: 'PDF to Images',
+    description: 'Export each page as PNG or JPEG. Multiple pages download as a ZIP.',
+    icon: '🖼️',
+  },
+  {
+    to: '/images-to-pdf',
+    title: 'Images to PDF',
+    description: 'Combine images into one PDF. Drag to set page order.',
+    icon: '📷',
+  },
 ]
 
 export function Home() {
@@ -28,7 +46,7 @@ export function Home() {
         Free PDF tools
       </h1>
       <p className="mb-8 text-slate-600 dark:text-slate-400">
-        Split, merge, and compress PDFs — entirely in your browser. No uploads, no servers.
+        Split, merge, compress, organize, and convert PDFs — entirely in your browser. No uploads, no servers.
       </p>
       <div className="grid gap-4 sm:grid-cols-3">
         {tools.map((tool) => (

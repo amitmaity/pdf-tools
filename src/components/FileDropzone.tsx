@@ -1,15 +1,24 @@
 import { useCallback, useRef, useState } from 'react'
 
+const defaultPdfFilter = (f: File) =>
+  f.type === 'application/pdf' || f.name.endsWith('.pdf')
+
 interface FileDropzoneProps {
   onFiles: (files: File[]) => void
   multiple?: boolean
   label?: string
+  accept?: string
+  filter?: (file: File) => boolean
+  hint?: string
 }
 
 export function FileDropzone({
   onFiles,
   multiple = false,
   label = 'Drop PDF here or click to browse',
+  accept = 'application/pdf,.pdf',
+  filter = defaultPdfFilter,
+  hint = 'PDF files only',
 }: FileDropzoneProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [dragOver, setDragOver] = useState(false)
@@ -17,10 +26,10 @@ export function FileDropzone({
   const handleFiles = useCallback(
     (fileList: FileList | null) => {
       if (!fileList?.length) return
-      const pdfs = [...fileList].filter((f) => f.type === 'application/pdf' || f.name.endsWith('.pdf'))
-      if (pdfs.length) onFiles(pdfs)
+      const accepted = [...fileList].filter(filter)
+      if (accepted.length) onFiles(accepted)
     },
-    [onFiles],
+    [onFiles, filter],
   )
 
   return (
@@ -48,7 +57,7 @@ export function FileDropzone({
       <input
         ref={inputRef}
         type="file"
-        accept="application/pdf,.pdf"
+        accept={accept}
         multiple={multiple}
         className="hidden"
         onChange={(e) => handleFiles(e.target.files)}
@@ -67,7 +76,7 @@ export function FileDropzone({
         />
       </svg>
       <p className="text-sm font-medium text-slate-700 dark:text-slate-200">{label}</p>
-      <p className="mt-1 text-xs text-slate-500">PDF files only</p>
+      <p className="mt-1 text-xs text-slate-500">{hint}</p>
     </div>
   )
 }
